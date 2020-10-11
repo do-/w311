@@ -1,0 +1,39 @@
+._w311_resizer {
+	position: absolute;
+	z-index: 1;
+	box-shadow: none;
+}
+
+._w311_resizer_ghost {
+	background: rgba(128,128,128,0.5)
+}
+
+._w311_resizer_X {
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	cursor: col-resize;
+}
+
+._w311_resizer_X_1 {
+	left: -2px;
+}
+
+._w311_resizer_X_0 {
+	right: -2px;
+}
+
+._w311_resizer_Y {
+	left: 0;
+	right: 0;
+	height: 3px;
+	cursor: row-resize;
+}
+
+._w311_resizer_Y_1 {
+	top: -2px;
+}
+
+._w311_resizer_Y_0 {
+	bottom: -2px;
+}
