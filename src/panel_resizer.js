@@ -8,9 +8,9 @@ W311.prototype.panel_resizer = class extends W311.prototype.something {
 			.addClass (w311.get_class_name ('_resizer_ghost'))
 			.appendTo (this.parent.$)
 
-		this.parent.$.parent ().on ('mousemove', this.h.move)
+		this.parent.$.parent ().on ('mousemove', this._h.move)
 
-		$(window).on ('mouseup', this.h.done)
+		$(window).on ('mouseup', this._h.done)
 		
 	}
 	
@@ -37,19 +37,17 @@ W311.prototype.panel_resizer = class extends W311.prototype.something {
 		let {parent} = this, {size} = parent.axis
 	
 		this.$ghost.remove ()
-	
-		$(window).off ('mouseup', this.h.done)
-	
-		parent.$.parent ().off ('mousemove', this.h.move)
+
+		$(window).off ('mouseup', this._h.done)
+
+		parent.$.parent ().off ('mousemove', this._h.move)
 
 		parent.$.trigger ('size', {[size]: (this.parent.$ [size] () + this.get_delta (e))})
 
 	}
 	
 	async init () {
-	
-		this.h = this.wrap ('move', 'done')
-	
+
 		let cls = '', html = '<div class="'; for (let k of ['resizer', this.parent.axis.name, this.parent.is_last]) {
 		
 			cls += '_' + k

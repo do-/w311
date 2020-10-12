@@ -52,9 +52,9 @@ class W311 {
 			
 	}
 
-	async keep (it) {
+	async keep (it, clazz) {
 	
-		w311._ [await w311.get_$_id (it.$)] = it
+		w311._ [clazz + '_' + (await w311.get_$_id (it.$))] = it
 	
 	}
 	
@@ -64,9 +64,32 @@ class W311 {
 		
 		let it = new w311 [clazz] (options)
 		
-		await it.init ()
+		it._h = {}
 		
-		await w311.keep (it)
+		let p = it.constructor.prototype
+		
+		while (true) {
+
+			for (let k of Object.getOwnPropertyNames (p)) switch (k) {
+
+				case 'constructor':
+				case 'init':
+					break
+
+				default:
+					it._h [k] = it.wrap (k)
+
+			}
+			
+			if ('wrap' in it._h) break
+			
+			p = p.__proto__
+
+		}		
+		
+		await it.init ()
+
+		await w311.keep (it, clazz)
 		
 		return it
 	
@@ -78,13 +101,9 @@ class W311 {
 
 W311.prototype.something = class {
 
-	wrap () {
+	wrap (k) {
 	
-		let h = {}
-	
-		for (let k of arguments) h [k] = (e, o) => this [k] (e, o)
-		
-		return h
+		return (e, o) => this [k] (e, o)
 	
 	}
 	
@@ -97,7 +116,7 @@ W311.prototype.something = class {
 	constructor (o) {
 
 		for (let k in o) this [k] = o [k]
-		
+
 	}
 
 }	
