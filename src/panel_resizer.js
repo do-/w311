@@ -42,7 +42,7 @@ W311.prototype.panel_resizer = class extends W311.prototype.something {
 
 		parent.$.parent ().off ('mousemove', this._h.move)
 
-		parent.$.trigger ('size', {[size]: (this.parent.$ [size] () + this.get_delta (e))})
+		parent.$.w311 ('resize', {[size]: (this.parent.$ [size] () + this.get_delta (e))})
 
 	}
 	

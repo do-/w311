@@ -9,6 +9,30 @@ class W311 {
 		this.css_prefix = '_w311'
 
 		for (let k in o) this [k] = o [k]
+		
+		$.fn.w311 = async function (action, o) {
+		
+			let event = $.Event (''), trigger = async (type) => {
+			
+				event.type = type
+				event._todo = []
+				event.done = p => event._todo.push (p)
+
+				this.triggerHandler (event, o)
+				
+				return Promise.all (event._todo)
+			
+			}
+			
+			await  trigger ('before_' + action)
+			
+			if (event.isDefaultPrevented ()) return
+			
+			await  trigger ('do_'     + action)
+
+			return trigger ('after_'  + action)
+
+		}
 	
 	}
 	
@@ -109,8 +133,8 @@ W311.prototype.something = class {
 	
 	size (e, o) {
 	
-		this.$.animate (o, 10)
-			
+		e.done (this.$.animate (o, {duration: 1000}).promise ())
+		
 	}
 
 	constructor (o) {

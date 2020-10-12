@@ -28,6 +28,9 @@ await w311.make ($('header'), 'panel')
 await w311.make ($('footer'), 'panel')
 await w311.make ($('nav'), 'panel')
 
+
+$('header').on ('after_resize', () => $('header').text ('XXX'))
+
 //$('*').on ('dragstart', darn)
 
 darn (w311)
