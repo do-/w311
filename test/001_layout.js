@@ -9,6 +9,7 @@ $(async () => {
 	await w311.make ($('nav'), 'panel')
 	await w311.make ($('aside'), 'panel', {
 		resizable: false,
+		size: 300,
 	})
 
 //	$('header').on ('after_resize', () => $('header').text ('XXX'))

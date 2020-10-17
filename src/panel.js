@@ -68,6 +68,8 @@ W311.prototype.panel = class extends W311.prototype.something {
 		(this.$sibling = await this.get_sibling ()).css ({flex: 1})
 		
 		if (!this.axis) await this.check_axis ();
+		
+		let {size} = this; if (size) this.$ [this.axis.size] (size)
 
 		let o = {display: "flex"}; for (let k of ["flex-direction"]) o [k] = this.axis [k]
 
@@ -76,8 +78,8 @@ W311.prototype.panel = class extends W311.prototype.something {
 		this.$.addClass (w311.get_class_name ('panel_' + this.type))
 
 		await w311.make (this.$, 'splitter', {panel: this})
-		
-		this.$.on ('do_resize', this._h.size)
+
+		this.$.on ('do_resize', this._h.animate)
 
 	}
 	

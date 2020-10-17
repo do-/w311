@@ -131,7 +131,7 @@ W311.prototype.something = class {
 	
 	}
 	
-	size (e, o) {
+	animate (e, o) {
 	
 		e.done (this.$.animate (o, {duration: 400}).promise ())
 		
