@@ -59,6 +59,8 @@ W311.prototype.panel = class extends W311.prototype.something {
 
 	async init () {
 	
+		if (!('resizable' in this)) this.resizable = !this.$.is ('[noresize]')
+
 		await this.check_position ();
 
 		if (this.type) await this.check_type ();

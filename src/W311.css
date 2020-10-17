@@ -23,8 +23,11 @@
 		top: 0;
 		bottom: 0;
 		width: 3px;
-		cursor: ew-resize;
 	}
+
+		._w311_splitter._w311_X._w311_hover {
+			cursor: ew-resize;
+		}
 
 		._w311_splitter._w311_X._w311_1 {
 			left: -1px;
@@ -38,8 +41,11 @@
 		left: 0;
 		right: 0;
 		height: 3px;
-		cursor: ns-resize;
 	}
+
+		._w311_splitter._w311_Y._w311_hover {
+			cursor: ns-resize;
+		}
 
 		._w311_splitter._w311_Y._w311_1 {
 			top: -1px;
@@ -49,6 +55,6 @@
 			bottom: -1px;
 		}
 
-._w311_splitter_ghost {
+._w311_ghost {
 	background: rgba(128,128,128,0.5)
 }

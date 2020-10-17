@@ -5,7 +5,7 @@ W311.prototype.splitter = class extends W311.prototype.something {
 	start (e) {
 	
 		this.$ghost = $('div', this.$).clone ()
-			.addClass (w311.get_class_name ('splitter_ghost'))
+			.addClass (w311.get_class_name ('ghost'))
 			.appendTo (this.$)
 
 		this.panel.$.parent ().on ('mousemove', this._h.move)
@@ -50,16 +50,21 @@ W311.prototype.splitter = class extends W311.prototype.something {
 	
 		let {panel} = this, other = [panel.axis.name, this.panel.is_last] // e. g. [X, 0] or [Y, 1]
 		
-		let cls = main => [main, ...other].map (w311.get_class_name).join (' ')
+		if (panel.resizable) other.push ('hover')
 
-		this.$ = $(`
-				<div class="${cls('splitter_container')}">
-					<div class="${cls('splitter')}" />
-				</div>
-			`)
+		let cls = main => [main, ...other].map (w311.get_class_name).join (' ')
+		
+		let html = `
+			<div class="${cls('splitter_container')}">
+				<div class="${cls('splitter')}" />
+			</div>
+		`
+
+		this.$ = $(html)
 			.on ('dragstart', e => e.preventDefault ())
-			.on ('mousedown', e => this.start ())
 			['insert' + (panel.is_last ? 'Before' : 'After')] (panel.$)
+			
+		if (panel.resizable) this.$.on ('mousedown', e => this.start ())
 
 	}
 
