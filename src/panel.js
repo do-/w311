@@ -69,7 +69,9 @@ W311.prototype.panel = class extends W311.prototype.something {
 		
 		if (!this.axis) await this.check_axis ();
 		
-		let {size} = this; if (size) this.$ [this.axis.size] (size)
+		let {size} = this; if (!size) size = this.$.attr (this.axis.size)
+		
+		if (size) this.$ [this.axis.size] (size)
 
 		let o = {display: "flex"}; for (let k of ["flex-direction"]) o [k] = this.axis [k]
 

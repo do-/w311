@@ -50,7 +50,7 @@ class W311 {
 	
 	}
 	
-	async get_$_id (jq) {
+	async get_$_id (pre, jq) {
 	
 		let el = jq [0], {id} = el; if (id) return id
 		
@@ -60,14 +60,14 @@ class W311 {
 			.trim ()
 			.replace (/\W+/g, '_')
 		
-		let s = nodeName; if (cls) s += '_' + cls
+		let s = pre + nodeName; if (cls) s += '_' + cls
 
 		s = s.toLowerCase ()			
 		
 		for (let i = 0; true; i ++) {
 		
 			let id = s; if (i) id += '_' + i
-			
+
 			if (id in w311._) continue
 
 			return el.id = id
@@ -78,7 +78,7 @@ class W311 {
 
 	async keep (it, clazz) {
 	
-		w311._ [clazz + '_' + (await w311.get_$_id (it.$))] = it
+		w311._ [(await w311.get_$_id (clazz + '_', it.$))] = it
 	
 	}
 	
@@ -88,6 +88,8 @@ class W311 {
 		
 		let it = new w311 [clazz] (options)
 		
+		it.$.data ('w311', it)
+
 		it._h = {}
 		
 		let p = it.constructor.prototype
