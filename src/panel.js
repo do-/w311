@@ -71,9 +71,9 @@ W311.prototype.panel = class extends W311.prototype.something {
 
 		this.$.parent ().css (o)		
 		
-		this.$.addClass (w311.get_class_name ('_panel_' + this.type))
+		this.$.addClass (w311.get_class_name ('panel_' + this.type))
 
-		await w311.make (this.$, 'panel_resizer', {parent: this})
+		await w311.make (this.$, 'splitter', {panel: this})
 		
 		this.$.on ('do_resize', this._h.size)
 

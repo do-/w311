@@ -6,7 +6,7 @@ class W311 {
 	
 		this._ = {}
 	
-		this.css_prefix = '_w311'
+		this.css_prefix = '_w311_'
 
 		for (let k in o) this [k] = o [k]
 		
@@ -38,7 +38,7 @@ class W311 {
 	
 	get_class_name (s) {
 	
-		return this.css_prefix + s
+		return w311.css_prefix + s
 	
 	}
 	
@@ -133,7 +133,7 @@ W311.prototype.something = class {
 	
 	size (e, o) {
 	
-		e.done (this.$.animate (o, {duration: 1000}).promise ())
+		e.done (this.$.animate (o, {duration: 400}).promise ())
 		
 	}
 
