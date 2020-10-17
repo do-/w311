@@ -1,0 +1,23 @@
+body {
+	margin:0;
+}
+
+header, main, footer, nav, div, aside {
+	background-color: #f2f2f2;
+	border: solid #ccc 1px;
+}
+
+/*
+._w311_panel_top {
+	border-bottom-width:1px;
+}
+._w311_panel_bottom {
+	border-top-width:1px;
+}
+._w311_panel_left {
+	border-right:solid black 1px;
+}
+._w311_panel_right {
+	border-left-width:1px;
+}
+*/

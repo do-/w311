@@ -71,7 +71,7 @@ W311.prototype.panel = class extends W311.prototype.something {
 
 		this.$.parent ().css (o)		
 		
-		this.$.css ({position: "relative"}).addClass (w311.get_class_name ('_panel_' + this.type))
+		this.$.addClass (w311.get_class_name ('_panel_' + this.type))
 
 		await w311.make (this.$, 'panel_resizer', {parent: this})
 		

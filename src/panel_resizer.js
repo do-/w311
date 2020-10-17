@@ -4,9 +4,9 @@ W311.prototype.panel_resizer = class extends W311.prototype.something {
 
 	start (e) {
 	
-		this.$ghost = this.$.clone ()
+		this.$ghost = $('div', this.$).clone ()
 			.addClass (w311.get_class_name ('_resizer_ghost'))
-			.appendTo (this.parent.$)
+			.appendTo (this.$)
 
 		this.parent.$.parent ().on ('mousemove', this._h.move)
 
@@ -48,7 +48,7 @@ W311.prototype.panel_resizer = class extends W311.prototype.something {
 	
 	async init () {
 
-		let cls = '', html = '<div class="'; for (let k of ['resizer', this.parent.axis.name, this.parent.is_last]) {
+		let cls = '', html = `<div class=${w311.get_class_name ("_resizer_container")}><div class="`; for (let k of ['resizer', this.parent.axis.name, this.parent.is_last]) {
 		
 			cls += '_' + k
 
@@ -59,7 +59,7 @@ W311.prototype.panel_resizer = class extends W311.prototype.something {
 		this.$ = $(html)
 			.on ('dragstart', e => e.preventDefault ())
 			.on ('mousedown', e => this.start ())
-			.appendTo (this.parent.$)
+			['insert' + (this.parent.is_last ? 'Before' : 'After')] (this.parent.$)
 
 	}
 

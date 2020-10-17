@@ -1,7 +1,12 @@
+._w311_resizer_container {
+	flex: 0;
+	position: relative;
+}
+
 ._w311_resizer {
+	border: 0;
 	position: absolute;
 	z-index: 1;
-	box-shadow: none;
 }
 
 ._w311_resizer_ghost {
@@ -12,28 +17,29 @@
 	top: 0;
 	bottom: 0;
 	width: 3px;
-	cursor: col-resize;
+	cursor: ew-resize;
 }
 
 ._w311_resizer_X_1 {
-	left: -2px;
+	left: -1px;
 }
 
 ._w311_resizer_X_0 {
-	right: -2px;
+	right: -1px;
 }
 
 ._w311_resizer_Y {
 	left: 0;
 	right: 0;
 	height: 3px;
-	cursor: row-resize;
+	cursor: ns-resize;
 }
 
 ._w311_resizer_Y_1 {
-	top: -2px;
+	top: -1px;
 }
 
 ._w311_resizer_Y_0 {
-	bottom: -2px;
+	bottom: -1px;
 }
+
