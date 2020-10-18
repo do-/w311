@@ -93,26 +93,19 @@ class W311 {
 		it._h = {}
 		
 		let p = it.constructor.prototype
-		
+
 		while (true) {
 
-			for (let k of Object.getOwnPropertyNames (p)) switch (k) {
-
-				case 'constructor':
-				case 'init':
-					break
-
-				default:
-					it._h [k] = it.wrap (k)
-
-			}
+			const wrap = '_wrap_methods_as_event_listeners', skip = {constructor: 1, init: 1}
 			
-			if ('wrap' in it._h) break
-			
+			for (let k of Object.getOwnPropertyNames (p)) if (!skip [k]) it._h [k] = it [wrap] (k)
+
+			if (wrap in it._h) break
+
 			p = p.__proto__
 
-		}		
-		
+		}
+
 		await it.init ()
 
 		await w311.keep (it, clazz)
@@ -127,7 +120,7 @@ class W311 {
 
 W311.prototype.something = class {
 
-	wrap (k) {
+	_wrap_methods_as_event_listeners (k) {
 	
 		return (e, o) => this [k] (e, o)
 	
