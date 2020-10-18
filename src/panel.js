@@ -48,8 +48,23 @@ W311.prototype.panel = class extends W311.prototype.something {
 	}
 
 	async check_axis () {
-	
-		this.axis = Object.values (w311.axis).find (a => this.$sibling.attr (a.size) == '*')
+
+		for (let a of Object.values (w311.axis)) {
+
+			let s = this [a.size]; 
+			
+			if (s) {			
+				this.size = s
+				this.axis = a
+				break							
+			}
+
+			if (this.$sibling.attr (a.size) == '*') {			
+				this.axis = a
+				break							
+			}
+		
+		}
 
 		if (!this.axis) w311.croak (this, 'Cannot figure out the layout orientation')
 		
@@ -63,9 +78,21 @@ W311.prototype.panel = class extends W311.prototype.something {
 	
 	}
 
-	async init () {
+	async get_defaults () {return {
 	
-		if (!('resizable' in this)) this.resizable = !this.$.is ('[noresize]')
+		resizable: true
+	
+	}}
+
+	async get_dom_options (jq) {return {
+
+		width:     jq.attr ('width'),
+		height:    jq.attr ('height'),
+		resizable: jq.is ('[noresize]') ? false : null
+
+	}}
+
+	async init () {
 
 		await this.check_position ();
 
@@ -75,9 +102,7 @@ W311.prototype.panel = class extends W311.prototype.something {
 		
 		if (!this.axis) await this.check_axis ();
 		
-		let {size} = this; if (!size) size = this.$.attr (this.axis.size)
-		
-		if (size) this.$ [this.axis.size] (size)
+		let {size} = this; if (size) this.$ [this.axis.size] (size)
 
 		let o = {display: "flex"}; for (let k of ["flex-direction"]) o [k] = this.axis [k]
 
