@@ -8,32 +8,28 @@ class W311 {
 	
 		this.css_prefix = '_w311_'
 
+		this.jquery_version = $.prototype.jquery
+
 		for (let k in o) this [k] = o [k]
 		
-		$.fn.w311 = async function (action, o) {
+		Object.defineProperty ($.prototype, "w311", {get: function () {return this.data ('w311')}})
 		
-			let event = $.Event (''), trigger = async (type) => {
-			
-				event.type = type
-				event._todo = []
-				event.done = p => event._todo.push (p)
+		$.fn.trigger_handler = async function (e) {
+		
+			e._todo = []; e.done = p => e._todo.push (p)
 
-				this.triggerHandler (event, o)
-				
-				return Promise.all (event._todo)
-			
-			}
-			
-			await  trigger ('before_' + action)
-			
-			if (event.isDefaultPrevented ()) return
-			
-			await  trigger ('do_'     + action)
+			this.triggerHandler (e, o)
 
-			return trigger ('after_'  + action)
+			return Promise.all (e._todo)
 
 		}
+
+	}
 	
+	is_jquery_object (o) {
+	
+		return o && typeof (o) == 'object' && o.jquery == w311.jquery_version
+
 	}
 	
 	get_class_name (s) {
@@ -82,35 +78,51 @@ class W311 {
 	
 	}
 	
-	async make (src, clazz, options = {}) {
-
-		options.$ = $(src)
+	add_methods_as_event_listeners (it) {
+	
+		let wrap = '_wrap_methods_as_event_listeners', skip = {constructor: 1, init: 1}, h = {}
 		
-		let it = new w311 [clazz] (options)
+		for (let p = it.constructor.prototype; !(wrap in h); p = p.__proto__) 
+
+			for (let k of Object.getOwnPropertyNames (p)) if (!skip [k]) h [k] = it [wrap] (k)
 		
-		it.$.data ('w311', it)
+		delete h [wrap]; it._h = h 
 
-		it._h = {}
+	}
+	
+	async make (a) {
+	
+		let kv = Object.entries (a), len = kv.length, r = {}
 		
-		let p = it.constructor.prototype
-
-		while (true) {
-
-			const wrap = '_wrap_methods_as_event_listeners', skip = {constructor: 1, init: 1}
+		for (let [k, v] of kv) {
+		
+			let clazz = k, options = v
 			
-			for (let k of Object.getOwnPropertyNames (p)) if (!skip [k]) it._h [k] = it [wrap] (k)
+			if (w311.is_jquery_object (options)) options = {$: options}
 
-			if (wrap in it._h) break
+			let it = new w311 [clazz] (options)
 
-			p = p.__proto__
+			this.add_methods_as_event_listeners (it)
+
+			await it.init ()
+			
+			await w311.keep (it, clazz)
+
+			if (it.$) {
+
+				it.$.data ('w311', it)
+				
+				if (it.id) it.$ [0].id = it.id
+
+			}
+
+			if (len == 1) return it
+			
+			r [k] = it
 
 		}
-
-		await it.init ()
-
-		await w311.keep (it, clazz)
 		
-		return it
+		return r
 	
 	}
 	
@@ -125,19 +137,25 @@ W311.prototype.something = class {
 		return (e, o) => this [k] (e, o)
 	
 	}
-	
-	animate (e, o) {
-	
-		e.done (this.$.animate (o, {duration: 400}).promise ())
-		
-	}
 
 	constructor (o) {
 
 		for (let k in o) this [k] = o [k]
 
 	}
+	
+	async do (action, o) {
 
-}	
+		let e = $.Event ('before_' + action); 
+
+		await  this.$.trigger_handler (e, o); if (e.isDefaultPrevented ()) return
+
+		await  this ['do_' + action] (o)
+
+		return this.$.trigger_handler ($.Event ('after_' + action), o)
+
+	}
+
+}
 
 1;

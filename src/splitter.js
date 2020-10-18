@@ -42,7 +42,7 @@ W311.prototype.splitter = class extends W311.prototype.something {
 
 		panel.$.parent ().off ('mousemove', this._h.move)
 
-		panel.$.w311 ('resize', {[size]: (panel.$ [size] () + this.get_delta (e))})
+		panel.do ('resize', {[size]: (panel.$ [size] () + this.get_delta (e))})
 
 	}
 	

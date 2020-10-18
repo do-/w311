@@ -56,6 +56,12 @@ W311.prototype.panel = class extends W311.prototype.something {
 		if (!this.type) this.type = Object.entries (this.get_types ()).find (([k, v]) => v.is_last == this.is_last && v.axis.name == this.axis.name) [0]
 
 	}
+	
+	async do_resize (o) {
+
+		return this.$.animate (o, {duration: 400}).promise ()
+	
+	}
 
 	async init () {
 	
@@ -79,9 +85,7 @@ W311.prototype.panel = class extends W311.prototype.something {
 		
 		this.$.addClass (w311.get_class_name ('panel_' + this.type))
 
-		await w311.make (this.$, 'splitter', {panel: this})
-
-		this.$.on ('do_resize', this._h.animate)
+		await w311.make ({splitter: {panel: this}})
 
 	}
 	

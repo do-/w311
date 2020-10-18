@@ -17,6 +17,7 @@
 	border: 0;
 	position: absolute;
 	z-index: 1;
+	cursor: not-allowed;
 }
 
 	._w311_splitter._w311_X {
