@@ -63,10 +63,18 @@ W311.prototype.panel = class extends W311.prototype.box {
 				this.axis = a
 				break							
 			}
-		
+
 		}
 
 		if (!this.axis) w311.croak (this, 'Cannot figure out the layout orientation')
+
+		let {size} = this.axis; for (let pre of ['min_', 'max_']) {
+
+			let v = this [pre + size]
+			
+			if (v) this [pre + 'size'] = v
+
+		}
 		
 		if (!this.type) this.type = Object.entries (this.get_types ()).find (([k, v]) => v.is_last == this.is_last && v.axis.name == this.axis.name) [0]
 
@@ -84,13 +92,25 @@ W311.prototype.panel = class extends W311.prototype.box {
 	
 	}}
 
-	async get_dom_options (jq) {return {
-
-		width:     jq.attr ('width'),
-		height:    jq.attr ('height'),
-		resizable: jq.is ('[noresize]') ? false : null
-
-	}}
+	async get_dom_options (jq) {
+		
+		let o = {
+			width:     jq.attr ('width'),
+			height:    jq.attr ('height'),
+			resizable: jq.is ('[noresize]') ? false : null
+		}
+		
+		for (let mm of ['min', 'max']) for (let wh of ['width', 'height']) {
+		
+			let v = parseInt (this.$.css (mm + '-' + wh))
+			
+			if (v > 0) o [mm + '_' + wh] = v
+		
+		}
+		
+		return o
+		
+	}
 
 	async init () {
 
@@ -101,7 +121,7 @@ W311.prototype.panel = class extends W311.prototype.box {
 		(this.$sibling = await this.get_sibling ()).css ({flex: 1})
 		
 		if (!this.axis) await this.check_axis ();
-		
+
 		let {size} = this; if (size) this.$ [this.axis.size] (size)
 
 		let o = {display: "flex"}; for (let k of ["flex-direction"]) o [k] = this.axis [k]

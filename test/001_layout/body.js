@@ -4,9 +4,7 @@ var $_DRAW = {}
 $_DRAW.body = async function () {
 
 	$('body').html (`
-		<header>
-			hhh
-		</header>
+		<header>hhh</header>
 
 		<main height=*></main>
 
