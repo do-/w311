@@ -13,10 +13,10 @@ $_DRAW.main = async function () {
 	`)
 	
 	await w311.make ({panel: $('nav')})
-	await w311.make ({panel: {
-		$: $('aside'),
+	
+	$('aside').make_w311 ('panel', {
 		resizable: false,
 		size: 300,
-	}})
+	})
 
 }

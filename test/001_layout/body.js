@@ -4,7 +4,7 @@ var $_DRAW = {}
 $_DRAW.body = async function () {
 
 	$('body').html (`
-		<header class=top>
+		<header>
 			hhh
 		</header>
 
@@ -21,12 +21,12 @@ $_DRAW.body = async function () {
 		</footer>
 	`)
 
-	await w311.make ({panel: $('header')})
-	await w311.make ({panel: $('footer')})
-		
-	$('header').on ('before_resize', e => {if (!confirm ('?')) e.preventDefault ()})
-	$('header').on ('after_resize', function () {$(this).text ('OK')})
-	
+	await w311.make ({panel: $('footer')});
+
+	(await $('header').make_w311 ('panel'))
+		.on ('before_resize', e => {if (!confirm ('?')) e.preventDefault ()})
+		.on ('after_resize', function () {$(this).text ('OK')})
+
 	$_DRAW.main ()
 
 }

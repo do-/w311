@@ -27,6 +27,16 @@ class W311 {
 			return Promise.all (e._todo)
 
 		}
+		
+		$.fn.make_w311 = async function (type, o = {}) {
+		
+			o.$ = this
+			
+			await w311.make ({[type]: o})
+			
+			return this
+
+		}
 
 	}
 	
