@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
-W311.prototype.splitter = class extends W311.prototype.something {
+W311.prototype.splitter = class extends W311.prototype.box {
 
 	start (e) {
 	
