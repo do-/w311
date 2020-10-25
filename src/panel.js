@@ -2,7 +2,7 @@
 
 W311.prototype.panel = class extends W311.prototype.box {
 	
-	get_types () {
+	get_sides () {
 	
 		const {X, Y} = w311.axis; return {
 
@@ -35,13 +35,13 @@ W311.prototype.panel = class extends W311.prototype.box {
 
 	}
 	
-	async check_type () {
+	async check_side () {
 
-		let t = this.get_types () [this.type]
+		let t = this.get_sides () [this.side]
 		
-		if (!t) w311.croak (this, 'Invalid type name')
+		if (!t) w311.croak (this, 'Invalid side name')
 		
-		if (t.is_last != this.is_last) w311.croak (this, 'This cannot be the ' + type + ' panel')
+		if (t.is_last != this.is_last) w311.croak (this, 'This cannot be the ' + side + ' panel')
 		
 		this.axis = t.axis
 
@@ -76,7 +76,7 @@ W311.prototype.panel = class extends W311.prototype.box {
 
 		}
 		
-		if (!this.type) this.type = Object.entries (this.get_types ()).find (([k, v]) => v.is_last == this.is_last && v.axis.name == this.axis.name) [0]
+		if (!this.side) this.side = Object.entries (this.get_sides ()).find (([k, v]) => v.is_last == this.is_last && v.axis.name == this.axis.name) [0]
 
 	}
 	
@@ -116,7 +116,7 @@ W311.prototype.panel = class extends W311.prototype.box {
 
 		await this.check_position ();
 
-		if (this.type) await this.check_type ();
+		if (this.side) await this.check_side ();
 
 		(this.$sibling = await this.get_sibling ()).css ({flex: 1})
 		
@@ -128,7 +128,7 @@ W311.prototype.panel = class extends W311.prototype.box {
 
 		this.$.parent ().css (o)		
 		
-		this.$.addClass (w311.get_class_name ('panel_' + this.type))
+		this.$.addClass (w311.get_class_name ('panel_' + this.side))
 
 		await w311.make ({splitter: {panel: this}})
 

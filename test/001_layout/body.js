@@ -26,7 +26,9 @@ $_DRAW.body = async function () {
 		.on ('before_resize', e => {if (!confirm ('?')) e.preventDefault ()})
 		.on ('after_resize', function () {$(this).text ('OK')})
 
-	$_DRAW.main ()
+	await $_DRAW.main ()
+	
+	darn (w311)
 
 }
 

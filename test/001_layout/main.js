@@ -5,7 +5,18 @@ $_DRAW.main = async function () {
 		<div width=*>...</div> 
 		<div id=page_right>AAA</div>
 	`)
-	
+
+	.make_w311 ('layout', {
+		left: {
+			min_width: 100,
+		},
+		right: {
+			resizable: false,
+			size: 300,
+		},
+	})
+
+/*	
 	return Promise.all ([
 
 		$('#page_left').make_w311 ('panel', {
@@ -17,6 +28,6 @@ $_DRAW.main = async function () {
 			size: 300,
 		}),
 
-	])
-
+	])		
+*/
 }
