@@ -23,7 +23,7 @@ W311.prototype.layout = class extends W311.prototype.box {
 
 		}
 		
-		await Promise.all (a.map (o => w311.make ({panel: o})))
+		await Promise.all (a.map (o => w311.make ({type: 'panel', ...o})))
 
 	}
 	

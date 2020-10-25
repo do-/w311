@@ -28,14 +28,11 @@ class W311 {
 
 		}
 		
-		$.fn.make_w311 = async function (type, o = {}) {
-		
-			o.$ = this
-			
-			await w311.make ({[type]: o})
-			
+		$.fn.w311_make= async function (o) {
+			if (typeof (o) == 'string') o = {type: o}
+			o.$ = this			
+			await w311.make (o)			
 			return this
-
 		}
 
 	}
@@ -104,56 +101,46 @@ class W311 {
 
 	}
 	
-	async make (a) {
+	async make (options) {
 	
 		function add (o, d) {
 		
 			for (let k in d) if (!(k in o)) {
-			
-				let v = d [k]; if (v != null) o [k] = v
-			
-			}
-		
-		}
-	
-		let kv = Object.entries (a), len = kv.length, r = {}
-		
-		for (let [k, v] of kv) {
-		
-			let clazz = k, options = v
-			
-			if (w311.is_jquery_object (options)) options = {$: options}
-						
-			let it = new w311 [clazz] (options)
 
-			if ('$' in options) add (it, (await it.get_dom_options (options.$)))
+				let v = d [k]
 
-			add (it, (await it.get_defaults ()))
-
-			this.add_methods_as_event_listeners (it)
-
-			await it.init ()
-
-			await w311.keep (it, clazz)
-
-			if (it.$) {
-
-				it.$.data ('w311', it)
-				
-				if (it.id && !it.$ [0].id) it.$ [0].id = it.id
+				if (v != null) o [k] = v
 
 			}
 
-			if (len == 1) return it
-			
-			r [k] = it
+		}	
 
-		}
-		
-		return r
-	
+		let {type} = options; if (!type) w311.croak (options, 'Undefined type')
+
+		let fact = w311 [type]; if (!fact) w311.croak (options, 'Unknown type: ' + type)
+
+		delete options.type; let it = new fact (options)
+
+		if ('$' in options) add (it, (await it.get_dom_options (options.$)))
+
+		add (it, (await it.get_defaults ()))
+
+		this.add_methods_as_event_listeners (it)
+
+		await it.init ()
+
+		await w311.keep (it, type)
+
+		if (!it.$) return it
+
+		it.$.data ('w311', it)
+
+		if (it.id && !it.$ [0].id) it.$ [0].id = it.id
+
+		return it
+
 	}
-	
+		
 }
 
 1;

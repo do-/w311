@@ -130,7 +130,10 @@ W311.prototype.panel = class extends W311.prototype.box {
 		
 		this.$.addClass (w311.get_class_name ('panel_' + this.side))
 
-		await w311.make ({splitter: {panel: this}})
+		await w311.make ({
+			type: 'splitter',
+			panel: this,
+		})
 
 	}
 	
