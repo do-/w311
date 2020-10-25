@@ -1,18 +1,22 @@
 $_DRAW.main = async function () {
 
-	$('main').html (`
-		<nav width=200>nnn</nav> 
+	$('#page_main').html (`
+		<div id=page_left width=200>nnn</div> 
 		<div width=*>...</div> 
-		<aside>AAA</aside>
+		<div id=page_right>AAA</div>
 	`)
-		
-	$('nav').make_w311 ('panel', {
-		min_width: 100,
-	})
+	
+	return Promise.all ([
 
-	$('aside').make_w311 ('panel', {
-		resizable: false,
-		size: 300,
-	})
+		$('#page_left').make_w311 ('panel', {
+			min_width: 100,
+		}),
+
+		$('#page_right').make_w311 ('panel', {
+			resizable: false,
+			size: 300,
+		}),
+
+	])
 
 }

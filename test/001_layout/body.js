@@ -4,11 +4,12 @@ var $_DRAW = {}
 $_DRAW.body = async function () {
 
 	$('body').html (`
-		<header>hhh</header>
+	
+		<div id=page_header>hhh</div>
 
-		<main height=*></main>
+		<div id=page_main height=*></div>
 
-		<footer noresize>
+		<div id=page_footer noresize>
 			fff
 			<br>
 			fff
@@ -16,12 +17,12 @@ $_DRAW.body = async function () {
 			fff
 			<br>
 			fff
-		</footer>
+		</div>
 	`)
 
-	await w311.make ({panel: $('footer')});
+	let [$head, $foot] = await Promise.all (['header', 'footer'].map (name => $('#page_' + name).make_w311 ('panel')))
 
-	(await $('header').make_w311 ('panel'))
+	$head
 		.on ('before_resize', e => {if (!confirm ('?')) e.preventDefault ()})
 		.on ('after_resize', function () {$(this).text ('OK')})
 

@@ -2,6 +2,6 @@ body {
 	margin:0;
 }
 
-header, main, footer, nav, div, aside {
+div {
 	background-color: #f2f2f2;
 }
