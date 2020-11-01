@@ -52,8 +52,9 @@ W311.prototype.panel = class extends W311.prototype.box {
 		for (let a of Object.values (w311.axis)) {
 
 			let s = this [a.size]; 
-			
+
 			if (s) {			
+				if (typeof s != 'number') s = this [a.size] = parseInt (s)
 				this.size = s
 				this.axis = a
 				break							

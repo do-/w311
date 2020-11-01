@@ -27,7 +27,7 @@ $_DRAW.body = async function () {
 		</div>
 	`)
 
-	let [$head, $foot] = await Promise.all (['header', 'footer'].map (name => $('#page_' + name).w311_make ('panel')))
+	let [$head, $foot] = await Promise.all (['header', 'footer'].map (name => $('#page_' + name).w311_make ({type: 'panel', height: 150})))
 
 	$head
 		.on ('before_resize', e => {if (!confirm ('?')) e.preventDefault ()})
@@ -36,6 +36,10 @@ $_DRAW.body = async function () {
 	await $_DRAW.main ()
 	
 	darn (w311)
+
+	$('._w311_panel').on ('before_resize', function () {
+		darn ($(this).w311)
+	})
 
 	$('._w311_panel').on ('after_resize', function () {
 		darn ($(this).w311)
