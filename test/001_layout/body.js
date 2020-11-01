@@ -5,7 +5,14 @@ $_DRAW.body = async function () {
 
 	$('body').html (`
 	
-		<div id=page_header>hhh</div>
+		<div id=page_header>
+			<header>
+				hhh
+			</header>
+			<main>
+				bbb
+			</main>
+		</div>
 
 		<div id=page_main height=*></div>
 
@@ -24,11 +31,16 @@ $_DRAW.body = async function () {
 
 	$head
 		.on ('before_resize', e => {if (!confirm ('?')) e.preventDefault ()})
-		.on ('after_resize', function () {$(this).text ('OK')})
+		.on ('after_resize', function () {$('main', this).text ('OK')})
 
 	await $_DRAW.main ()
 	
 	darn (w311)
+
+	$('._w311_panel').on ('after_resize', function () {
+		darn ($(this).w311)
+	})
+
 
 }
 

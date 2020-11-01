@@ -81,8 +81,10 @@ W311.prototype.panel = class extends W311.prototype.box {
 	}
 	
 	async do_resize (o) {
+	
+		const {size} = this.axis
 
-		return this.$.animate (o, {duration: 400}).promise ()
+		return this.$.animate ({[size]: this [size] = this.size = o.size}, {duration: 400}).promise ()
 	
 	}
 
@@ -128,7 +130,7 @@ W311.prototype.panel = class extends W311.prototype.box {
 
 		this.$.parent ().css (o)		
 		
-		this.$.addClass (w311.get_class_name ('panel_' + this.side))
+		this.$.addClass (w311.get_class_name ('panel') + ' ' + w311.get_class_name (this.side))
 
 		await w311.make ({
 			type: 'splitter',

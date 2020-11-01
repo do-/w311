@@ -1,6 +1,6 @@
 $_DRAW.main = async function () {
 
-	$('#page_main').html (`
+	return $('#page_main').html (`
 		<div id=page_left width=200>nnn</div> 
 		<div width=*>...</div> 
 		<div id=page_right>AAA</div>

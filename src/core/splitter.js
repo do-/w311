@@ -54,24 +54,22 @@ W311.prototype.splitter = class extends W311.prototype.box {
 
 	done (e) {
 	
-		let {panel} = this, {min_size, max_size} = panel, {size} = panel.axis
+		let {panel} = this, {min_size, max_size} = panel, size = this.get_new_size (e)
 	
+		if (max_size && size > max_size) {
+			size = max_size
+		}
+		else if (min_size && size < min_size) {
+			size = min_size
+		}
+
 		this.$ghost.remove ()
 
 		$(window).off ('mouseup', this._h.done)
 
 		panel.$.parent ().off ('mousemove', this._h.move)
-		
-		let new_size = this.get_new_size (e)
 
-		if (max_size && new_size > max_size) {
-			new_size = max_size
-		}
-		else if (min_size && new_size < min_size) {
-			new_size = min_size
-		}
-
-		panel.do ('resize', {[size]: new_size})
+		panel.do ('resize', {size})
 
 	}
 	

@@ -1,7 +1,19 @@
 body {
 	margin:0;
+	font-family: Helvetica, Arial, sans-serif;
 }
 
 div {
 	background-color: #f2f2f2;
+}
+
+header {
+    left: 0;
+    top: 0;
+    right: 0;
+    font-size:14px;
+    padding: 5px;
+    background-image: linear-gradient(#dae6f3,#c2d5ed);
+    border: 1px solid #b9cee9;
+    border-bottom: 1px solid #99bbe8;
 }
